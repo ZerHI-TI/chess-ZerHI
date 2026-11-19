@@ -4,7 +4,10 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QPixmap, QFont
 from PyQt6.QtCore import Qt
 
+from gameLogic import logic_king, logic_pawn
+
 class BoardWidget(QWidget):
+    current_color = 'white'
     def __init__(self):
         super().__init__()
         self.grid_layout = QGridLayout()
@@ -92,13 +95,26 @@ class BoardWidget(QWidget):
         to_row, to_col = to_pos
         from_button = self.board[from_row][from_col]
         to_button = self.board[to_row][to_col]
-
-        # СЮДА НАДО БУДЕТ СДЕЛАТЬ ПРОВЕРКУ НА ДОПУСТИМОСТЬ ХОДА
-
-        if not to_button.text():
-            to_button.setText(from_button.text()) 
-            to_button.setProperty('color', from_button.property('color'))
-            to_button.setProperty('piece_type', from_button.property('piece_type'))
-            from_button.setText("") 
-            from_button.setProperty('color', None)
-            from_button.setProperty('piece_type', None)
+        # СЮДА НАДО БУДЕТ СДЕЛАТЬ ПРОВЕРКУ НА ДОПУСТИМОСТЬ 
+        if from_button.property('color') == self.current_color:
+            match from_button.property('piece_type'):
+                case 'pawn':
+                    logic_pawn(from_button.property('color'), from_pos, to_pos, from_button, to_button)
+                case 'king':
+                    logic_king(from_button.property('color'), from_pos, to_pos, from_button, to_button, self.board)
+                case 'queen':
+                    logic_queen(from_button.property('piece_type'), from_button.property('color'), from_button, to_button, self.board)
+                case 'rook':
+                    logic_rook(from_button.property('piece_type'), from_button.property('color'), from_button, to_button, self.board)
+                case 'bishop':
+                    logic_bishop(from_button.property('piece_type'), from_button.property('color'), from_button, to_button, self.board)
+                case 'knight':
+                    logic_knight(from_button.property('piece_type'), from_button.property('color'), from_button, to_button, self.board)
+            
+        # if not to_button.text():
+        #     to_button.setText(from_button.text()) 
+        #     to_button.setProperty('color', from_button.property('color'))
+        #     to_button.setProperty('piece_type', from_button.property('piece_type'))
+        #     from_button.setText("") 
+        #     from_button.setProperty('color', None)
+        #     from_button.setProperty('piece_type', None)
