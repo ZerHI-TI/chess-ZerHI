@@ -41,9 +41,18 @@ def logic_pawn(color, from_pos, to_pos, from_button, to_button):
                 catch_piece(to_button, from_button)
     return None
 
-def logic_king(color, from_pos, to_pos, from_button, to_button, board):
+def logic_king(from_pos, to_pos, from_button, to_button):
     from view.Board import BoardWidget
     if (to_pos[0] == from_pos[0]+1 or to_pos[0] == from_pos[0]-1 or to_pos[0] == from_pos[0]) and (to_pos[1] == from_pos[1]+1 or to_pos[1] == from_pos[1]-1 or to_pos[1] == from_pos[1]):
+        if not to_button.text():
+            move_piece_right(to_button, from_button)
+        elif to_button.text() and to_button.property('color') != BoardWidget.current_color:
+            catch_piece(to_button, from_button)
+    return None
+
+def logic_knight(from_pos, to_pos, from_button, to_button):
+    from view.Board import BoardWidget
+    if (to_pos[0] == from_pos[0]+2 and (to_pos[1] == from_pos[1]+1 or to_pos[1] == from_pos[1]-1)) or (to_pos[0] == from_pos[0]-2 and (to_pos[1] == from_pos[1]+1 or to_pos[1] == from_pos[1]-1)) or (to_pos[0] == from_pos[0]+1 and (to_pos[1] == from_pos[1]+2 or to_pos[1] == from_pos[1]-2)) or (to_pos[0] == from_pos[0]-1 and (to_pos[1] == from_pos[1]+2 or to_pos[1] == from_pos[1]-2)):
         if not to_button.text():
             move_piece_right(to_button, from_button)
         elif to_button.text() and to_button.property('color') != BoardWidget.current_color:
