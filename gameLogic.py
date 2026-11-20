@@ -58,3 +58,63 @@ def logic_knight(from_pos, to_pos, from_button, to_button):
         elif to_button.text() and to_button.property('color') != BoardWidget.current_color:
             catch_piece(to_button, from_button)
     return None
+
+def logic_rook(from_pos, to_pos, from_button, to_button, board):
+    pass
+
+def validate_one_square_move(current_pos, to_pos, square, from_button, to_button):
+    if square.text():
+        if current_pos[0] == to_pos[0] and current_pos[1] == to_pos[1] and square.property('color') != from_button.property('color'):
+            catch_piece(to_button, from_button)
+        return False
+    if not square.text():
+        if current_pos[0] == to_pos[0] and current_pos[1] == to_pos[1]:
+            move_piece_right(to_button, from_button)
+        return None
+    
+def logic_bishop(from_pos, to_pos, from_button, to_button, board):
+    if(to_pos[0] < from_pos[0] and to_pos[1] > from_pos[1]):
+        for step in range(1, from_pos[0]-to_pos[0]+1):
+            current_pos = (from_pos[0]-step, from_pos[1]+step)
+            square = board[current_pos[0]][current_pos[1]]
+            validate_one_square_move(current_pos, to_pos, square, from_button, to_button)
+
+    elif(to_pos[0] > from_pos[0] and to_pos[1] > from_pos[1]):
+        for step in range(1, to_pos[0]-from_pos[0]+1):
+            current_pos = (from_pos[0]+step, from_pos[1]+step)
+            square = board[current_pos[0]][current_pos[1]]
+            validate_one_square_move(current_pos, to_pos, square, from_button, to_button)
+
+    elif(to_pos[0] < from_pos[0] and to_pos[1] < from_pos[1]):
+        for step in range(1, from_pos[0]-to_pos[0]+1):
+            current_pos = (from_pos[0]-step, from_pos[1]-step)
+            square = board[current_pos[0]][current_pos[1]]
+            validate_one_square_move(current_pos, to_pos, square, from_button, to_button)
+            
+    elif(to_pos[0] > from_pos[0] and to_pos[1] < from_pos[1]):
+        for step in range(1, to_pos[0]-from_pos[0]+1):
+            current_pos = (from_pos[0]+step, from_pos[1]-step)
+            square = board[current_pos[0]][current_pos[1]]
+            validate_one_square_move(current_pos, to_pos, square, from_button, to_button)
+
+""" 
+   for i in range(8):
+        print(i)
+        if i+from_pos[0] or i+from_pos[1] > 7:
+            return None
+        if board[i+from_pos[0]][i-from_pos[1]] is None:
+            return None
+        else: 
+            if i-from_pos[0] == to_pos[0] and i-from_pos[1] == to_pos[1]:
+                move_piece_right(to_button, from_button) """
+
+    # if to_pos[0] > from_pos[0]:
+    #     if to_pos[1] > from_pos[1]:
+    #         return None
+    #     elif to_pos[1] < from_pos[1]:
+    #         return None
+    # elif to_pos[0] < from_pos[0]:
+    #     if to_pos[1] > from_pos[1]:
+    #         return None
+    #     elif to_pos[1] < from_pos[1]:
+    #         for i in range(from_pos[])
