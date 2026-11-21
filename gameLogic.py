@@ -129,6 +129,10 @@ def logic_bishop(from_pos, to_pos, from_button, to_button, board):
             if not validate_one_square_move(current_pos, to_pos, square, from_button, to_button):
                 break
 
+def logic_queen(from_pos, to_pos, from_button, to_button, board):
+    logic_bishop(from_pos, to_pos, from_button, to_button, board)
+    logic_rook(from_pos, to_pos, from_button, to_button, board)
+
 """ 
    for i in range(8):
         print(i)

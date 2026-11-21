@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QPixmap, QFont
 from PyQt6.QtCore import Qt
 
-from gameLogic import logic_bishop, logic_king, logic_knight, logic_pawn, logic_rook
+from gameLogic import logic_bishop, logic_king, logic_knight, logic_pawn, logic_queen, logic_rook
 
 class BoardWidget(QWidget):
     current_color = 'white'
@@ -103,7 +103,7 @@ class BoardWidget(QWidget):
                 case 'king':
                     logic_king(from_pos, to_pos, from_button, to_button)
                 case 'queen':
-                    logic_queen(from_button.property('piece_type'), from_button.property('color'), from_button, to_button, self.board)
+                    logic_queen(from_pos, to_pos, from_button, to_button, self.board)
                 case 'rook':
                     logic_rook(from_pos, to_pos, from_button, to_button, self.board)
                 case 'bishop':
