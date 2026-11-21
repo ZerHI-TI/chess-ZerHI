@@ -3,6 +3,7 @@ def move_piece_right(to_button, from_button):
     to_button.setText(from_button.text()) 
     to_button.setProperty('color', from_button.property('color'))
     to_button.setProperty('piece_type', from_button.property('piece_type'))
+    print(to_button.property('color'), to_button.text(), )
     from_button.setText("") 
     from_button.setProperty('color', None)
     from_button.setProperty('piece_type', None)
@@ -12,13 +13,19 @@ def move_piece_right(to_button, from_button):
         BoardWidget.current_color = 'white'
 
 def catch_piece(to_button, from_button):
-    print("захват!")
+    from view.Board import BoardWidget
+    if to_button.property('color') == 'black':
+        BoardWidget.captured_pieces_white.append(to_button.text())
+        move_piece_right(to_button, from_button)
+    elif to_button.property('color') == 'white':
+        BoardWidget.captured_pieces_black.append(to_button.text())
+        move_piece_right(to_button, from_button)
+    print(f"черные:{BoardWidget.captured_pieces_white} | белые:{BoardWidget.captured_pieces_black}")
     return None
 
 def logic_pawn(color, from_pos, to_pos, from_button, to_button):
     if(color == 'white'):
         if from_pos[0] == 6 and (to_pos[0] == 5 or to_pos[0] == 4):
-            print(to_button.text(), to_pos[1] == from_pos[1] + 1, to_pos[1] == from_pos[1] - 1)
             if to_button.text() and (to_pos[1] == from_pos[1] + 1 or to_pos[1] == from_pos[1] - 1):
                 catch_piece(to_button, from_button)
             elif(to_pos[1] == from_pos[1]) and not to_button.text():
@@ -132,25 +139,3 @@ def logic_bishop(from_pos, to_pos, from_button, to_button, board):
 def logic_queen(from_pos, to_pos, from_button, to_button, board):
     logic_bishop(from_pos, to_pos, from_button, to_button, board)
     logic_rook(from_pos, to_pos, from_button, to_button, board)
-
-""" 
-   for i in range(8):
-        print(i)
-        if i+from_pos[0] or i+from_pos[1] > 7:
-            return None
-        if board[i+from_pos[0]][i-from_pos[1]] is None:
-            return None
-        else: 
-            if i-from_pos[0] == to_pos[0] and i-from_pos[1] == to_pos[1]:
-                move_piece_right(to_button, from_button) """
-
-    # if to_pos[0] > from_pos[0]:
-    #     if to_pos[1] > from_pos[1]:
-    #         return None
-    #     elif to_pos[1] < from_pos[1]:
-    #         return None
-    # elif to_pos[0] < from_pos[0]:
-    #     if to_pos[1] > from_pos[1]:
-    #         return None
-    #     elif to_pos[1] < from_pos[1]:
-    #         for i in range(from_pos[])

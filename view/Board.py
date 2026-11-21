@@ -8,6 +8,9 @@ from gameLogic import logic_bishop, logic_king, logic_knight, logic_pawn, logic_
 
 class BoardWidget(QWidget):
     current_color = 'white'
+    captured_pieces_black = []
+    captured_pieces_white = []
+    
     def __init__(self):
         super().__init__()
         self.grid_layout = QGridLayout()
